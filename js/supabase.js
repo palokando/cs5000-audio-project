@@ -42,6 +42,36 @@ export async function getStaticAudioFiles(keys) {
 }
 
 // ---------------------------------------------------------------------------
+// Study 1 page submissions
+// ---------------------------------------------------------------------------
+
+export function submitStudy1Page2(prolificId, v) {
+  return rpc("submit_study1_page2", {
+    p_prolific_id: prolificId,
+    p_age: v.age,
+    p_gender: v.gender,
+    p_native_tongue: v.nativeTongue,
+  });
+}
+
+export function submitStudy1Page3(prolificId, v) {
+  return rpc("submit_study1_page3", {
+    p_prolific_id: prolificId,
+    p_conceptual_mapping: v.conceptualMapping,
+    p_elicited_reaction:  v.elicitedReaction,
+    p_recognizability:    v.recognizability,
+    p_distraction:        v.distraction,
+    p_abruptness:         v.abruptness,
+    p_interruption:       v.interruption,
+    p_task_feedback:      v.taskFeedback,
+  });
+}
+
+export function finalizeStudy1(prolificId) {
+  return rpc("finalize_study1", { p_prolific_id: prolificId });
+}
+
+// ---------------------------------------------------------------------------
 // Study 2 page submissions
 // ---------------------------------------------------------------------------
 

@@ -1,7 +1,7 @@
 // Page 7 — Post-Study Debrief. No Quit button per spec.
 
 import { submitStudy2Page7 } from "../../supabase.js";
-import { checkbox, textArea } from "./_helpers.js";
+import { checkbox, textArea } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Below is the actual research objective. Please reaffirm your consent and reflect on the questions that follow.";
 

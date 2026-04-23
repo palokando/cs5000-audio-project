@@ -1,4 +1,4 @@
-// Shared form helpers used by Study 2 pages.
+// Shared form helpers used across both studies' pages.
 
 let uid = 0;
 const nextName = () => `f${++uid}`;

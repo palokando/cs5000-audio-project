@@ -1,6 +1,6 @@
 // Premature Study Exit. No buttons, just the completion code marker.
 
-import { questionBlock } from "./_helpers.js";
+import { questionBlock } from "../../form-helpers.js";
 
 const LOREM = "You have exited the study. Use the code below as your completion submission on Prolific.";
 const PREMATURE_CODE = "SAMPLE-CODE-PREMATURE";

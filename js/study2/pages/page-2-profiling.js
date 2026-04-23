@@ -4,7 +4,7 @@ import { createCalibrationPlayer } from "../../audio-player.js";
 import { submitStudy2Page2 } from "../../supabase.js";
 import {
   radioGroup, likert, textInput, numberInput, checkbox, questionBlock,
-} from "./_helpers.js";
+} from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum dolor sit amet. Please answer the following questions about yourself, then complete the volume calibration before continuing.";
 

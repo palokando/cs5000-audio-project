@@ -2,7 +2,7 @@
 
 import { createPodcastPlayer } from "../../audio-player.js";
 import { updateStudy2PlaybackStats } from "../../supabase.js";
-import { questionBlock } from "./_helpers.js";
+import { questionBlock } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Please listen to the podcast all the way through. The Continue button unlocks 2 seconds before the end. The audio will pause if you switch focus to another window.";
 

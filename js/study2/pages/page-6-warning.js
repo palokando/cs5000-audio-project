@@ -3,7 +3,7 @@
 
 import { createFreeFormPlayer } from "../../audio-player.js";
 import { submitStudy2Page6 } from "../../supabase.js";
-import { radioGroup, likert, textArea, questionBlock } from "./_helpers.js";
+import { radioGroup, likert, textArea, questionBlock } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Below are three excerpts containing the warning sound. Listen to them as needed (all controls are available) before answering.";
 const ACCLIMATE_OPTS = [

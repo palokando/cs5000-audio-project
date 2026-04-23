@@ -2,7 +2,7 @@
 
 import { createMandatorySnippetPlayer } from "../../audio-player.js";
 import { submitStudy2Page5 } from "../../supabase.js";
-import { radioGroup, textArea, questionBlock } from "./_helpers.js";
+import { radioGroup, textArea, questionBlock } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Two short clips from the podcast are reproduced below. For each, indicate whether the information conveyed is factually accurate.";
 const YES_NO = [["true", "Yes"], ["false", "No"]];

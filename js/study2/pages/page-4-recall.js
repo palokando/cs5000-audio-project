@@ -1,7 +1,7 @@
 // Page 4 — Recall Assessment.
 
 import { submitStudy2Page4 } from "../../supabase.js";
-import { radioGroup, textArea } from "./_helpers.js";
+import { radioGroup, textArea } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Please answer the following questions about the podcast you just listened to.";
 
