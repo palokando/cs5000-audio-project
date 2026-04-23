@@ -2,7 +2,7 @@
 - The task is unidirectional (workers cannot go back and revise their answers after transitioning to the next page)
 - Each page in the task should have dedicated space at the top for instructions to be specified (lorem-ipsum text sufficient for now)
 - Directly below this instruction-text component, each page contains questions/items that workers fill out and interact with (this specification file outlines all such items in detail)
-- At the bottom-right of each page, a Continue button is located, allowing workers to progress to the next page
+- At the bottom-right of each page (except for Page 4), a Continue button is located, allowing workers to progress to the next page
 
 ## Page 1: Introduction
 - No additional page contents besides instruction-text and Continue button
@@ -52,11 +52,11 @@
 - Question Continuation 4 (Interruption): "The sound interrupted your overall listening experience."
 - Answer Options: Not at all, Slightly, Moderately, Very, Extremely (5-point Likert scale)
 
-## Page 4: Study Completion
-
 ### Optional Task Feedback
 - Question: "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below."
 - Answer Options: (free-text response)
+
+## Page 4: Study Completion
 
 ### Completion Code
 - For now, a SAMPLE-CODE-FINAL marker is sufficient
