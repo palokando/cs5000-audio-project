@@ -6,6 +6,7 @@ export function makeSession(prolificId) {
     condition: null,           // study2_condition
     podcastUrl: null,          // string
     podcastTopic: null,        // string
+    podcastName: null,         // string
     staticAudio: {},           // { [key]: url }
     page3Stats: { latestTimeReached: 0, totalPlaytime: 0, pauseClicks: 0, backtrackClicks: 0 },
     soundRecognized: null,     // boolean | null — set on Page 4 submit

@@ -188,7 +188,9 @@ CREATE TABLE study2_responses (
 -- =============================================================================
 
 CREATE OR REPLACE FUNCTION touch_updated_at() RETURNS trigger
-LANGUAGE plpgsql AS $$
+LANGUAGE plpgsql
+SET search_path = public, pg_temp
+AS $$
 BEGIN
     NEW.updated_at := now();
     RETURN NEW;

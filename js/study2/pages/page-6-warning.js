@@ -46,7 +46,7 @@ export default {
     fields = {};
 
     for (let i = 1; i <= 3; i++) {
-      const url = state.staticAudio[`warning_snippet_${i}`];
+      const url = state.staticAudio[`${state.podcastName}_${i}`];
       const wrap = questionBlock(container, `Warning snippet ${i}`);
       players.push(createFreeFormPlayer(wrap, url));
     }

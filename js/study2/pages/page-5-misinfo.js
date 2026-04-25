@@ -34,7 +34,7 @@ export default {
     rationales = [];
 
     for (let i = 1; i <= 2; i++) {
-      const url = state.staticAudio[`misinfo_snippet_${i}`];
+      const url = i === 1 ? state.staticAudio[`${state.podcastTopic}_recognize_benign`] : state.staticAudio[`${state.podcastTopic}_recognize_misinformative`];
       const wrap = questionBlock(container, `Snippet ${i}`);
       players.push(createMandatorySnippetPlayer(wrap, url, { onListenedEnough: recheck }));
 

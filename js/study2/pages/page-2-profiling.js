@@ -128,7 +128,7 @@ export default {
 
     // Volume calibration player
     const calibWrap = questionBlock(container, "Volume calibration — please listen all the way through to enable Continue.");
-    calibrationPlayer = createCalibrationPlayer(calibWrap, state.staticAudio.volume_calibration, {
+    calibrationPlayer = createCalibrationPlayer(calibWrap, state.staticAudio[`${state.podcastTopic}_volume_calibration`], {
       onListenedEnough: recheck,
     });
   },

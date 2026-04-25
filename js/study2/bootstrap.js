@@ -32,6 +32,7 @@ export async function start() {
   state.condition = assignedCondition;
   state.podcastUrl = podcastFileUrl;
   state.podcastTopic = podcastTopic;
+  state.podcastName = podcastFileName;
 
   const staticAudioKeys = [
     `${podcastTopic}_volume_calibration`,
