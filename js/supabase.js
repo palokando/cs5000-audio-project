@@ -126,10 +126,10 @@ export function submitStudy2Page4(prolificId, v) {
 export function submitStudy2Page5(prolificId, v) {
   return rpc("submit_study2_page5", {
     p_prolific_id: prolificId,
-    p_bm_recognized_1: v.recognized1,
-    p_bm_recognized_2: v.recognized2,
-    p_bm_rationale_1: v.rationale1,
-    p_bm_rationale_2: v.rationale2,
+    p_bm_recognized_b: v.recognizedB,
+    p_bm_recognized_m: v.recognizedM,
+    p_bm_rationale_b: v.rationaleB,
+    p_bm_rationale_m: v.rationaleM,
   });
 }
 

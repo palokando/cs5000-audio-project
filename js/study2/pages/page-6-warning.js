@@ -11,7 +11,6 @@ const ACCLIMATE_OPTS = [
   ["2", "Remained stable throughout"],
   ["3", "Became more pronounced"],
 ];
-const FIVE_PT = ["Not at all", "Slightly", "Moderately", "Very", "Extremely"];
 
 let players = [];
 let fields = null;
@@ -47,7 +46,7 @@ export default {
 
     for (let i = 1; i <= 3; i++) {
       const url = state.staticAudio[`${state.podcastName}_${i}`];
-      const wrap = questionBlock(container, `Warning snippet ${i}`);
+      const wrap = questionBlock(container, `Podcast Snippet ${i} (Sound Reminder)`);
       players.push(createFreeFormPlayer(wrap, url));
     }
 
@@ -57,10 +56,12 @@ export default {
     fields.acclimateTrend     = radioGroup(container, "Did your initial perceptions of the sound change as it re-occurred throughout the podcast? Please select an option...", ACCLIMATE_OPTS);
     fields.acclimateRationale = textArea(container, "...and elaborate in the text box below (1-2 sentences).");
 
-    fields.recognizability = likert(container, "Using the respective scales below, please indicate the extent to which:\n\n...The real-world entity you associate with the sound was easy to recognize upon hearing it.", 5, FIVE_PT);
-    fields.distraction     = likert(container, "...You found the sound distracting while listening.", 5, FIVE_PT);
-    fields.abruptness      = likert(container, "...The sound seemed out of place whenever it occurred.", 5, FIVE_PT);
-    fields.interruption    = likert(container, "...The sound interrupted your overall listening experience.", 5, FIVE_PT);
+    const likert_overarching = questionBlock(container, "Using the respective scale below, please indicate the extent to which:");
+    const likert_scalelabels = questionBlock(container, "1 – Not at all, 2 – Slightly, 3 – Moderately, 4 – Very, 5 – Extremely");
+    fields.recognizability = likert(container, "...The real-world entity you associate with the sound was easy to recognize upon hearing it.", 5);
+    fields.distraction     = likert(container, "...You found the sound distracting while listening.", 5);
+    fields.abruptness      = likert(container, "...The sound seemed out of place whenever it occurred.", 5);
+    fields.interruption    = likert(container, "...The sound interrupted your overall listening experience.", 5);
 
     [fields.acclimateTrend, fields.recognizability, fields.distraction, fields.abruptness, fields.interruption]
       .forEach((r) => r.onChange(recheck));

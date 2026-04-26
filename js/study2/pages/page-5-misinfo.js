@@ -7,17 +7,17 @@ import { radioGroup, textArea, questionBlock } from "../../form-helpers.js";
 const LOREM = "Lorem ipsum. Two short clips from the podcast are reproduced below. For each, indicate whether the information conveyed is factually accurate.";
 const YES_NO = [["true", "Yes"], ["false", "No"]];
 
-let players = [];
-let judgments = [];
-let rationales = [];
+let players = {};
+let judgments = {};
+let rationales = {};
 let setReadyCb = null;
 
 function recheck() { setReadyCb?.(validate().ok); }
 
 function validate() {
-  if (players.some((p) => !p?.isListenedEnough())) return { ok: false };
-  if (judgments.some((r) => r.getValue() === null)) return { ok: false };
-  if (rationales.some((t) => !t.isFilled())) return { ok: false };
+  if (Object.values(players).some((p) => !p?.isListenedEnough())) return { ok: false };
+  if (Object.values(judgments).some((r) => r.getValue() === null)) return { ok: false };
+  if (Object.values(rationales).some((t) => !t.isFilled())) return { ok: false };
   return { ok: true };
 }
 
@@ -29,39 +29,36 @@ export default {
 
   mount(container, state, ctx) {
     setReadyCb = ctx.setReady;
-    players = [];
-    judgments = [];
-    rationales = [];
 
-    for (let i = 1; i <= 2; i++) {
-      const url = i === 1 ? state.staticAudio[`${state.podcastTopic}_recognize_benign`] : state.staticAudio[`${state.podcastTopic}_recognize_misinformative`];
-      const wrap = questionBlock(container, `Snippet ${i}`);
-      players.push(createMandatorySnippetPlayer(wrap, url, { onListenedEnough: recheck }));
+    const orderList = Math.random() < 0.5 ? ["benign", "misinformative"] : ["misinformative", "benign"];
+    for (let i = 0; i <= 1; i++) {
+      const wrap = questionBlock(container, `Podcast Snippet ${i + 1}`);
+      players[orderList[i]] = createMandatorySnippetPlayer(wrap, state.staticAudio[`${state.podcastTopic}_recognize_${orderList[i]}`], { onListenedEnough: recheck });
 
-      judgments.push(radioGroup(container, "Is the information conveyed in the snippet factually accurate?", YES_NO));
-      rationales.push(textArea(container, "What makes you think so? (1-2 sentences)"));
+      judgments[orderList[i]] = radioGroup(container, "Is the information conveyed in the snippet factually accurate?", YES_NO);
+      rationales[orderList[i]] = textArea(container, "What makes you think so? (1-2 sentences)");
     }
 
-    judgments.forEach((r) => r.onChange(recheck));
-    rationales.forEach((t) => t.onChange(recheck));
+    Object.values(judgments).forEach((r) => r.onChange(recheck));
+    Object.values(rationales).forEach((t) => t.onChange(recheck));
   },
 
   validate,
 
   async submit(state) {
     await submitStudy2Page5(state.prolificId, {
-      recognized1: judgments[0].getValue() === "true",
-      recognized2: judgments[1].getValue() === "true",
-      rationale1: rationales[0].getValue(),
-      rationale2: rationales[1].getValue(),
+      recognizedB: judgments.benign.getValue() === "true",
+      recognizedM: judgments.misinformative.getValue() === "true",
+      rationaleB: rationales.benign.getValue(),
+      rationaleM: rationales.misinformative.getValue(),
     });
   },
 
   teardown() {
     players.forEach((p) => p?.destroy());
-    players = [];
-    judgments = [];
-    rationales = [];
+    players = {};
+    judgments = {};
+    rationales = {};
     setReadyCb = null;
   },
 };

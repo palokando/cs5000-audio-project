@@ -101,23 +101,51 @@ export default {
     fields.hrw   = numberInput(container, "How many hours per week do you spend listening to podcasts?", { suffix: "hours per week" });
     fields.pcm   = numberInput(container, "How many different podcasts do you listen to in a typical month?", { suffix: "podcasts per month" });
 
-    fields.topicFamiliarity = likert(container, "How would you describe your current knowledge on the topic?", 7, ["Non-existent","Very poor","Below average","Average","Above average","Very good","Excellent"]);
-    fields.priorStance = likert(container, "What is your stance on the following claim? 'SAMPLE-CLAIM'", 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
+    const topicDict = {
+      ne: [
+        "Nuclear Energy for Power Generation",
+        "Nuclear power is among the cleanest, safest, and most reliable energy sources supplying the electricity grid."
+      ],
+      cpr: [
+        "Health Effects of Cell Phone Radiation",
+        "The energy emitted by cell phones has no known interactions with human anatomy besides causing tissue heating and occasional nerve stimulation."
+      ],
+      gmo: [
+        "Applications and Safety of GMO Foods",
+        "Genetically modified foods authorized for commercial distribution are safe for human consumption and do not pose a direct environmental hazard."
+      ]
+    };
+    fields.topicFamiliarity = likert(container, `How would you describe your current knowledge on the topic '${topicDict[state.podcastTopic][0]}'?`, 7, ["Non-existent","Very poor","Below average","Average","Above average","Very good","Excellent"]);
+    fields.priorStance = likert(container, `What is your stance on the following claim? '${topicDict[state.podcastTopic][1]}'`, 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
     fields.attitudeImportance = likert(container, "How important is your attitude on this topic to you?", 7, ["Not important at all","Largely unimportant","Somewhat unimportant","Neutral","Moderately important","Very important","Extremely important"]);
     fields.attitudeElaboration = likert(container, "To what extent do you agree with the following statement? 'Your attitude on this topic is a result of careful thinking about relevant information.'", 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
     fields.attitudeMoralization = likert(container, "To what extent do you agree with the following statement? 'Your attitude on this topic is connected to your core moral values.'", 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
 
     const NFC_LABELS = ["Extremely uncharacteristic of me","Somewhat uncharacteristic of me","Neither","Somewhat characteristic of me","Extremely characteristic of me"];
-    fields.nfc = [];
-    for (let i = 1; i <= 6; i++) {
-      fields.nfc.push(likert(container, `SAMPLE-QUESTION-OUT-OF-6 #${i}`, 5, NFC_LABELS));
-    }
+    fields.nfc = [
+      likert(container, "I would prefer complex to simple problems.", 5, NFC_LABELS),
+      likert(container, "I like to have the responsibility of handling a situation that requires a lot of thinking.", 5, NFC_LABELS),
+      likert(container, "Thinking is not my idea of fun.", 5, NFC_LABELS),
+      likert(container, "I would rather do something that requires little thought than something that is sure to challenge my thinking abilities.", 5, NFC_LABELS),
+      likert(container, "I really enjoy a task that involves coming up with new solutions to problems.", 5, NFC_LABELS),
+      likert(container, "I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.", 5, NFC_LABELS)
+    ];
 
     const IHS_LABELS = ["Strongly disagree","Disagree","Mostly disagree","Slightly disagree","Neither agree nor disagree","Slightly agree","Mostly agree","Agree","Strongly agree"];
-    fields.ihs = [];
-    for (let i = 1; i <= 12; i++) {
-      fields.ihs.push(likert(container, `SAMPLE-QUESTION-OUT-OF-12 #${i}`, 9, IHS_LABELS));
-    }
+    fields.ihs = [
+      likert(container, "If I don't understand something, I try to get clear about what exactly is confusing to me.", 9, IHS_LABELS),
+      likert(container, "When I don't understand something, I try hard to figure it out.", 9, IHS_LABELS),
+      likert(container, "I love learning.", 9, IHS_LABELS),
+      likert(container, "I care about truth.", 9, IHS_LABELS),
+      likert(container, "I focus on my intellectual weaknesses too much.", 9, IHS_LABELS),
+      likert(container, "When I know that I have an intellectual weakness in one area, I tend to doubt my intellectual abilities in other areas as well.", 9, IHS_LABELS),
+      likert(container, "When I think about the limitations of what I know, I feel uncomfortable.", 9, IHS_LABELS),
+      likert(container, "I tend to get defensive about my intellectual limitations and weaknesses.", 9, IHS_LABELS),
+      likert(container, "I have a hard time admitting when one of my beliefs is mistaken.", 9, IHS_LABELS),
+      likert(container, "When someone points out a mistake in my thinking, I am quick to admit that I was wrong.", 9, IHS_LABELS),
+      likert(container, "I am quick to acknowledge my intellectual limitations.", 9, IHS_LABELS),
+      likert(container, "I feel comfortable admitting my intellectual limitations.", 9, IHS_LABELS)
+    ];
 
     // Wire change handlers
     [fields.age, fields.gender, fields.frequency,

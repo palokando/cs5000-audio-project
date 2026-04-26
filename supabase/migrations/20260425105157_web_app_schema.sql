@@ -153,10 +153,10 @@ CREATE TABLE study2_responses (
     podcast_pace             smallint CHECK (podcast_pace    BETWEEN 1 AND 5),
 
     -- Page 5: Misinformation Recognition
-    bm_recognized_1          boolean,
-    bm_recognized_2          boolean,
-    bm_rationale_1           text,
-    bm_rationale_2           text,
+    bm_recognized_b          boolean,
+    bm_recognized_m          boolean,
+    bm_rationale_b           text,
+    bm_rationale_m           text,
 
     -- Page 6: Warning Evaluation
     conceptual_mapping       text,
@@ -607,20 +607,20 @@ GRANT EXECUTE ON FUNCTION submit_study2_page4(
 -- Study 2 Page 5 --------------------------------------------------------------
 CREATE OR REPLACE FUNCTION submit_study2_page5(
     p_prolific_id       text,
-    p_bm_recognized_1   boolean,
-    p_bm_recognized_2   boolean,
-    p_bm_rationale_1    text,
-    p_bm_rationale_2    text
+    p_bm_recognized_b   boolean,
+    p_bm_recognized_m   boolean,
+    p_bm_rationale_b    text,
+    p_bm_rationale_m    text
 ) RETURNS void
 LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = public, pg_temp
 AS $$
 BEGIN
     UPDATE study2_responses
-       SET bm_recognized_1 = p_bm_recognized_1,
-           bm_recognized_2 = p_bm_recognized_2,
-           bm_rationale_1  = p_bm_rationale_1,
-           bm_rationale_2  = p_bm_rationale_2
+       SET bm_recognized_b = p_bm_recognized_b,
+           bm_recognized_m = p_bm_recognized_m,
+           bm_rationale_b  = p_bm_rationale_b,
+           bm_rationale_m  = p_bm_rationale_m
      WHERE participant_prolific_id = p_prolific_id
        AND completed_at IS NULL
        AND exited_prematurely_at IS NULL;

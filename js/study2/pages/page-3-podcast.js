@@ -27,7 +27,12 @@ export default {
     prolificId = state.prolificId;
     setReadyCb(false);
 
-    const wrap = questionBlock(container, "Podcast");
+    const podcastTitle = {
+      ne: "Deep Dive: Nuclear Energy for Power Generation",
+      cpr: "Deep Dive: Health Effects of Cell Phone Radiation",
+      gmo: "Deep Dive: Applications and Safety of GMO Foods"
+    };
+    const wrap = questionBlock(container, podcastTitle[state.podcastTopic]);
     player = createPodcastPlayer(wrap, state.podcastUrl, {
       onListenedEnough: () => setReadyCb(true),
       onStatsChanged: pushStats,
