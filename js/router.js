@@ -7,6 +7,8 @@ const els = {
   content: null,
   continueBtn: null,
   quitBtn: null,
+  progress: null,
+  progressFill: null,
 };
 
 let cfg = null;
@@ -20,6 +22,8 @@ export function run(config) {
   els.content      = document.getElementById("content");
   els.continueBtn  = document.getElementById("continue-btn");
   els.quitBtn      = document.getElementById("quit-btn");
+  els.progress     = document.getElementById("progress");
+  els.progressFill = document.getElementById("progress-fill");
 
   els.continueBtn.addEventListener("click", onContinue);
   els.quitBtn.addEventListener("click", onQuit);
@@ -41,6 +45,22 @@ function setReady(ok) {
   els.continueBtn.disabled = !ok;
 }
 
+function updateProgress() {
+  // Compute progress against the pages that will actually be visited given
+  // current state. Page 6 of Study 2 may be skipped, in which case the
+  // visible-page count shrinks and the bar advances accordingly.
+  let visibleCount = 0;
+  let currentVisibleIdx = 0;
+  for (let i = 0; i < cfg.pages.length; i++) {
+    if (cfg.pages[i].skipIf?.(cfg.state)) continue;
+    if (i === currentIndex) currentVisibleIdx = visibleCount;
+    visibleCount++;
+  }
+  const pct = visibleCount > 1 ? (currentVisibleIdx / (visibleCount - 1)) * 100 : 100;
+  els.progressFill.style.width = `${pct}%`;
+  els.progress.hidden = false;
+}
+
 function renderCurrent() {
   // Skip pages whose skipIf predicate matches.
   while (currentIndex < cfg.pages.length && cfg.pages[currentIndex].skipIf?.(cfg.state)) {
@@ -58,13 +78,14 @@ function renderCurrent() {
   els.instruction.innerHTML = "";
   els.content.innerHTML = "";
 
-  const instrP = document.createElement("p");
-  instrP.className = "instruction-text";
-  instrP.textContent = currentPage.instructions || "";
-  els.instruction.append(instrP);
+  const instrWrap = document.createElement("div");
+  instrWrap.className = "instruction-text";
+  instrWrap.innerHTML = currentPage.instructions || "";
+  els.instruction.append(instrWrap);
 
   els.quitBtn.hidden     = !currentPage.showQuit;
   els.continueBtn.hidden = !currentPage.showContinue;
+  updateProgress();
   if (currentIndex === cfg.pages.length - 2) {
     els.continueBtn.innerHTML = "Finish";
   }
@@ -121,9 +142,10 @@ function showExit() {
   els.content.innerHTML = "";
   els.quitBtn.hidden = true;
   els.continueBtn.hidden = true;
-  const instrP = document.createElement("p");
-  instrP.className = "instruction-text";
-  instrP.textContent = cfg.exitPage.instructions || "";
-  els.instruction.append(instrP);
+  els.progress.hidden = true;
+  const instrWrap = document.createElement("div");
+  instrWrap.className = "instruction-text";
+  instrWrap.innerHTML = cfg.exitPage.instructions || "";
+  els.instruction.append(instrWrap);
   cfg.exitPage.mount(els.content, cfg.state, { setReady, finish: () => {} });
 }
