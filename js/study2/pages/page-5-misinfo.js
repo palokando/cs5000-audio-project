@@ -55,7 +55,7 @@ export default {
   },
 
   teardown() {
-    players.forEach((p) => p?.destroy());
+    Object.values(players).forEach((p) => p?.destroy());
     players = {};
     judgments = {};
     rationales = {};

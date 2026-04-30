@@ -26,6 +26,7 @@ export default {
     setReadyCb = ctx.setReady;
     prolificId = state.prolificId;
     setReadyCb(false);
+    // setReadyCb(true);
 
     const podcastTitle = {
       ne: "Deep Dive: Nuclear Energy for Power Generation",
@@ -35,6 +36,7 @@ export default {
     const wrap = questionBlock(container, podcastTitle[state.podcastTopic]);
     player = createPodcastPlayer(wrap, state.podcastUrl, {
       onListenedEnough: () => setReadyCb(true),
+      // onListenedEnough: () => {},
       onStatsChanged: pushStats,
     });
 
@@ -47,6 +49,7 @@ export default {
 
   validate() {
     return { ok: !!player && player.isListenedEnough() };
+    // return { ok: true };
   },
 
   async submit(state) {

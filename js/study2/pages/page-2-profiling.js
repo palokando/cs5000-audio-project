@@ -115,11 +115,11 @@ export default {
         "Genetically modified foods authorized for commercial distribution are safe for human consumption and do not pose a direct environmental hazard."
       ]
     };
-    fields.topicFamiliarity = likert(container, `How would you describe your current knowledge on the topic '${topicDict[state.podcastTopic][0]}'?`, 7, ["Non-existent","Very poor","Below average","Average","Above average","Very good","Excellent"]);
-    fields.priorStance = likert(container, `What is your stance on the following claim? '${topicDict[state.podcastTopic][1]}'`, 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
+    fields.topicFamiliarity = likert(container, `How would you describe your current knowledge on the topic <mark>"${topicDict[state.podcastTopic][0]}"</mark>?`, 7, ["Non-existent","Very poor","Below average","Average","Above average","Very good","Excellent"]);
+    fields.priorStance = likert(container, `What is your stance on the following claim? <mark>"${topicDict[state.podcastTopic][1]}"</mark>`, 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
     fields.attitudeImportance = likert(container, "How important is your attitude on this topic to you?", 7, ["Not important at all","Largely unimportant","Somewhat unimportant","Neutral","Moderately important","Very important","Extremely important"]);
-    fields.attitudeElaboration = likert(container, "To what extent do you agree with the following statement? 'Your attitude on this topic is a result of careful thinking about relevant information.'", 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
-    fields.attitudeMoralization = likert(container, "To what extent do you agree with the following statement? 'Your attitude on this topic is connected to your core moral values.'", 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
+    fields.attitudeElaboration = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is a result of careful thinking about relevant information."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
+    fields.attitudeMoralization = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is connected to your core moral values."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
 
     const NFC_LABELS = ["Extremely uncharacteristic of me","Somewhat uncharacteristic of me","Neither","Somewhat characteristic of me","Extremely characteristic of me"];
     fields.nfc = [

@@ -13,11 +13,8 @@ function recheck() { setReadyCb?.(validate().ok); }
 function validate() {
   if (!fields) return { ok: false };
   if (!fields.readInfo.isChecked()) return { ok: false };
-
-  const consentGranted = fields.consent.isChecked();
-  if (!consentGranted) return { ok: true };
-  if (consentGranted && !fields.immediate.isFilled()) return { ok: false };
-  if (consentGranted && !fields.downstream.isFilled()) return { ok: false };
+  if (!fields.immediate.isFilled()) return { ok: false };
+  if (!fields.downstream.isFilled()) return { ok: false };
 
   return { ok: true };
 }
@@ -38,7 +35,6 @@ export default {
     fields.feedback = textArea(container, "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below.", { required: false });
 
     fields.readInfo.onChange(recheck);
-    fields.consent.onChange(recheck);
     fields.immediate.onChange(recheck);
     fields.downstream.onChange(recheck);
   },

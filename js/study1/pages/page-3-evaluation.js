@@ -4,7 +4,7 @@
 
 import { createMandatorySnippetPlayer } from "../../audio-player.js";
 import { submitStudy1Page3 } from "../../supabase.js";
-import { likert, textArea, questionBlock } from "../../form-helpers.js";
+import { likertMatrix, textArea, questionBlock } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Please listen to all three short excerpts before answering. Each player exposes only Pause/Play and a Back-10s control.";
 
@@ -42,15 +42,24 @@ export default {
       }));
     }
 
-    fields.conceptual = textArea(container, "What does the sound remind you of – does it match any real-world object or situation? Please type in what associations you make (1-2 sentences), and feel free to replay the provided audio snippets if you need to hear the sound again.");
+    fields.conceptual = textArea(container, "What does the sound remind you of — does it match any real-world object or situation? Please type in what associations you make (1-2 sentences), and feel free to replay the provided audio snippets if you need to hear the sound again.");
     fields.elicited   = textArea(container, "What was your reaction the first time you heard the sound while listening to the conversation excerpts? Please discuss the experience and your thoughts in the text box below (2-3 sentences).");
 
-    const likert_overarching = questionBlock(container, "Using the respective scale below, please indicate the extent to which:");
-    const likert_scalelabels = questionBlock(container, "1 – Not at all, 2 – Slightly, 3 – Moderately, 4 – Very, 5 – Extremely");
-    fields.recognizability = likert(container, "...The real-world entity you associate with the sound was easy to recognize upon hearing it.", 5);
-    fields.distraction     = likert(container, "...You found the sound distracting while listening.", 5);
-    fields.abruptness      = likert(container, "...The sound seemed out of place whenever it occurred.", 5);
-    fields.interruption    = likert(container, "...The sound interrupted your overall listening experience.", 5);
+    const matrix = likertMatrix(container, {
+      promptHTML: "Using the respective scale below, please indicate the extent to which:",
+      scaleLabelsHTML: "<i>(1 – Not at all, 2 – Slightly, 3 – Moderately, 4 – Very, 5 – Extremely)</i>",
+      n: 5,
+      questions: [
+        { key: "recognizability", label: "The real-world entity you associate with the sound was easy to recognize upon hearing it." },
+        { key: "distraction",     label: "You found the sound distracting while listening." },
+        { key: "abruptness",      label: "The sound seemed out of place whenever it occurred." },
+        { key: "interruption",    label: "The sound interrupted your overall listening experience." },
+      ],
+    });
+    fields.recognizability = matrix.recognizability;
+    fields.distraction     = matrix.distraction;
+    fields.abruptness      = matrix.abruptness;
+    fields.interruption    = matrix.interruption;
 
     fields.taskFeedback = textArea(container, "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below.", { required: false });
 

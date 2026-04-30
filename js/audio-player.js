@@ -45,9 +45,20 @@ export function createAudioPlayer(container, url, options = {}) {
     backBtn.textContent = "Back 10s";
   }
 
-  const status = document.createElement("span");
-  status.className = "audio-status";
-  status.textContent = "0.0s / —";
+  const elapsedEl = document.createElement("span");
+  elapsedEl.className = "audio-time elapsed";
+  elapsedEl.textContent = "00:00";
+
+  const totalEl = document.createElement("span");
+  totalEl.className = "audio-time total";
+  totalEl.textContent = "00:00";
+
+  const bar = document.createElement("div");
+  bar.className = "audio-bar";
+  bar.setAttribute("aria-hidden", "true");
+  const barFill = document.createElement("div");
+  barFill.className = "audio-bar-fill";
+  bar.append(barFill);
 
   if (useNative) {
     audio.controls = true;
@@ -55,14 +66,26 @@ export function createAudioPlayer(container, url, options = {}) {
   } else {
     wrap.append(playBtn);
     if (backBtn) wrap.append(backBtn);
-    wrap.append(status);
+    wrap.append(elapsedEl, bar, totalEl);
     wrap.append(audio);
   }
   container.append(wrap);
 
-  function fmt(t) { return Number.isFinite(t) ? `${t.toFixed(1)}s` : "—"; }
+  function mmss(t) {
+    if (!Number.isFinite(t) || t < 0) return "00:00";
+    const total = Math.floor(t);
+    const m = Math.floor(total / 60).toString().padStart(2, "0");
+    const s = (total % 60).toString().padStart(2, "0");
+    return `${m}:${s}`;
+  }
   function refreshStatus() {
-    if (!useNative) status.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+    if (useNative) return;
+    elapsedEl.textContent = mmss(audio.currentTime);
+    totalEl.textContent = mmss(audio.duration);
+    const pct = Number.isFinite(audio.duration) && audio.duration > 0
+      ? Math.min(100, (audio.currentTime / audio.duration) * 100)
+      : 0;
+    barFill.style.width = `${pct}%`;
   }
   function checkListenedEnough() {
     if (listenedEnough) return;
