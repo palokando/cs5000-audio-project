@@ -56,14 +56,54 @@ export function radioGroup(parent, label, options) {
   };
 }
 
-// 1..N integer Likert; convenience wrapper.
+// 1..N integer Likert. Renders as a horizontal scale: each option is a column
+// with the radio on top, the number below, and (optionally) the text descriptor
+// centered and wrapping below that. Column widths are tailored to the 9-option
+// case so labels never overlap; shorter scales (5, 7) keep the same column
+// treatment with more breathing room.
 export function likert(parent, label, n, displayLabels) {
-  const opts = [];
+  const wrap = questionBlock(parent, label);
+  const scale = document.createElement("div");
+  scale.className = "likert-scale";
+  const name = nextName();
+  const inputs = [];
   for (let i = 1; i <= n; i++) {
-    const display = displayLabels ? `${i} – ${displayLabels[i - 1]}` : String(i);
-    opts.push([i, display]);
+    const opt = document.createElement("label");
+    opt.className = "likert-scale-option";
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = name;
+    input.value = String(i);
+    const num = document.createElement("span");
+    num.className = "likert-scale-num";
+    num.textContent = String(i);
+    opt.append(input, num);
+    if (displayLabels) {
+      const text = document.createElement("span");
+      text.className = "likert-scale-text";
+      text.innerHTML = displayLabels[i - 1];
+      opt.append(text);
+    }
+    scale.append(opt);
+    inputs.push(input);
   }
-  return radioGroup(parent, label, opts);
+  wrap.append(scale);
+  const subscribers = [];
+  for (const inp of inputs) {
+    inp.addEventListener("change", () => subscribers.forEach((cb) => cb()));
+  }
+  return {
+    element: wrap,
+    getValue() {
+      const sel = inputs.find((i) => i.checked);
+      return sel ? sel.value : null;
+    },
+    onChange(cb) { subscribers.push(cb); },
+    setDisabled(d) {
+      inputs.forEach((i) => (i.disabled = d));
+      if (d) inputs.forEach((i) => (i.checked = false));
+    },
+  };
 }
 
 export function textArea(parent, label, { required = true } = {}) {

@@ -121,7 +121,7 @@ export default {
     fields.attitudeElaboration = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is a result of careful thinking about relevant information."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
     fields.attitudeMoralization = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is connected to your core moral values."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
 
-    const NFC_LABELS = ["Extremely uncharacteristic of me","Somewhat uncharacteristic of me","Neither","Somewhat characteristic of me","Extremely characteristic of me"];
+    const NFC_LABELS = ["Extremely uncharacteristic<br>of me","Somewhat uncharacteristic<br>of me","Neither","Somewhat characteristic<br>of me","Extremely characteristic<br>of me"];
     fields.nfc = [
       likert(container, "I would prefer complex to simple problems.", 5, NFC_LABELS),
       likert(container, "I like to have the responsibility of handling a situation that requires a lot of thinking.", 5, NFC_LABELS),

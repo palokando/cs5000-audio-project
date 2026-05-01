@@ -1,20 +1,14 @@
 // Page 4 — Recall Assessment.
 
 import { submitStudy2Page4 } from "../../supabase.js";
-import { radioGroup, textArea } from "../../form-helpers.js";
+import { radioGroup, textArea, likert } from "../../form-helpers.js";
 
 const LOREM = "Lorem ipsum. Please answer the following questions about the podcast you just listened to.";
 
 const YES_NO = [["true", "Yes"], ["false", "No"]];
 const FREQ_OPTS = [["1", "Once"], ["2", "Twice"], ["3", "Three times or more"]];
-const DENSITY_OPTS = [
-  ["1", "1 – Too sparse"], ["2", "2 – Sparse"], ["3", "3 – Moderate"],
-  ["4", "4 – Cluttered"], ["5", "5 – Too cluttered"],
-];
-const PACE_OPTS = [
-  ["1", "1 – Very slow"], ["2", "2 – Slow"], ["3", "3 – Moderate"],
-  ["4", "4 – Fast"], ["5", "5 – Very fast"],
-];
+const DENSITY_LABELS = ["Too sparse", "Sparse", "Moderate", "Cluttered", "Too cluttered"];
+const PACE_LABELS = ["Very slow", "Slow", "Moderate", "Fast", "Very fast"];
 
 let fields = null;
 let setReadyCb = null;
@@ -364,8 +358,8 @@ export default {
       fields.statsRationale.element.hidden = true;
     }
 
-    fields.density = radioGroup(container, "How dense did the podcast seem in terms of the amount of information it conveyed?", DENSITY_OPTS);
-    fields.pace    = radioGroup(container, "Please rate the podcast's pace using the scale below.", PACE_OPTS);
+    fields.density = likert(container, "How dense did the podcast seem in terms of the amount of information it conveyed?", 5, DENSITY_LABELS);
+    fields.pace    = likert(container, "Please rate the podcast's pace using the scale below.", 5, PACE_LABELS);
 
     [...fields.recall, fields.freq, fields.density, fields.pace].forEach((r) => r.onChange(recheck));
     [fields.purpose, fields.statsRationale].forEach((t) => t.onChange(recheck));
