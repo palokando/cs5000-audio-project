@@ -6,7 +6,7 @@ import { createMandatorySnippetPlayer } from "../../audio-player.js";
 import { submitStudy1Page3 } from "../../supabase.js";
 import { likertMatrix, textArea, questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Please listen to all three short excerpts before answering. Each player exposes only Pause/Play and a Back-10s control.";
+const LOREM = "<h1>Page 2: Sound Evaluation</h1><p>Listen to all three conversation snippets below at least once. Afterwards, answer the questions based on your subjective impressions of the sound cue.</p>";
 
 let players = [];
 let fields = null;

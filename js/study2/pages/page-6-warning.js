@@ -5,7 +5,7 @@ import { createFreeFormPlayer } from "../../audio-player.js";
 import { submitStudy2Page6 } from "../../supabase.js";
 import { radioGroup, likertMatrix, textArea, questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Below are three excerpts containing the warning sound. Listen to them as needed (all controls are available) before answering.";
+const LOREM = "<h1>Page 5: Sound Evaluation</h1><p>This section of the study focuses on the non-verbal sound you encountered while listening to the podcast. Answer the questions below based on your subjective impressions, and (optionally) listen to the provided excerpts to remind yourself of the sound.</p>";
 const ACCLIMATE_OPTS = [
   ["1", "Became less pronounced"],
   ["2", "Remained stable throughout"],

@@ -6,7 +6,7 @@ import {
   radioGroup, likert, textInput, numberInput, checkbox, questionBlock,
 } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum dolor sit amet. Please answer the following questions about yourself, then complete the volume calibration before continuing.";
+const LOREM = "<h1>Page 1: Participant Characteristics and Contextualization</h1><p>Please answer the following general questions, then complete the volume calibration before continuing.</p>";
 
 const AGE_OPTIONS = [
   ["18-24", "18-24 years old"], ["25-34", "25-34 years old"],
@@ -155,7 +155,7 @@ export default {
     [fields.years, fields.hrw, fields.pcm].forEach((n) => n.onChange(recheck));
 
     // Volume calibration player
-    const calibWrap = questionBlock(container, "Volume calibration — please listen all the way through to enable Continue.");
+    const calibWrap = questionBlock(container, "This audio sample is the beginning of the podcast you're about to listen to. To proceed, please play the snippet and set your volume to a comfortable level such that both speakers are clearly audible.");
     calibrationPlayer = createCalibrationPlayer(calibWrap, state.staticAudio[`${state.podcastTopic}_volume_calibration`], {
       onListenedEnough: recheck,
     });

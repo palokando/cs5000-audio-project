@@ -4,7 +4,7 @@ import { createMandatorySnippetPlayer } from "../../audio-player.js";
 import { submitStudy2Page5 } from "../../supabase.js";
 import { radioGroup, textArea, questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Two short clips from the podcast are reproduced below. For each, indicate whether the information conveyed is factually accurate.";
+const LOREM = "<h1>Page 4: Veracity Assessment</h1><p>Two short excerpts from the podcast are reproduced below. For each snippet, first listen to it all the way through and then indicate whether the discussion within is factually correct or contains misinformation.</p>";
 const YES_NO = [["true", "Yes"], ["false", "No"]];
 
 let players = {};

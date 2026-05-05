@@ -3,7 +3,7 @@
 import { submitStudy2Page4 } from "../../supabase.js";
 import { radioGroup, textArea, likert } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Please answer the following questions about the podcast you just listened to.";
+const LOREM = "<h1>Page 3: Recall Assessment</h1><p>Based on what you remember from the podcast you just listened to, complete the questionnaire below. Each of the 15 content-related multiple-choice questions has one unique correct answer: please read both the question-text and the answer-options carefully before making your selection.</p>";
 
 const YES_NO = [["true", "Yes"], ["false", "No"]];
 const FREQ_OPTS = [["1", "Once"], ["2", "Twice"], ["3", "Three times or more"]];

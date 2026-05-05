@@ -4,7 +4,7 @@ import { createPodcastPlayer } from "../../audio-player.js";
 import { updateStudy2PlaybackStats } from "../../supabase.js";
 import { questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Please listen to the podcast all the way through. The Continue button unlocks 2 seconds before the end. The audio will pause if you switch focus to another window.";
+const LOREM = "<h1>Page 2: Podcast Listening</h1><p>The podcast underpinning this study is accessible via the audio player below. Please listen attentively and freely use the Pause/Play and Backtrack buttons as needed. Note that the player will automatically pause if you switch focus to another window: after the full duration of the podcast has elapsed, the Continue button will become active.</p>";
 
 let player = null;
 let setReadyCb = null;

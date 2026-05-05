@@ -4,7 +4,7 @@ import { createCalibrationPlayer } from "../../audio-player.js";
 import { submitStudy1Page2 } from "../../supabase.js";
 import { radioGroup, textInput, checkbox, questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum dolor sit amet. Please answer the following questions about yourself, then complete the volume calibration before continuing.";
+const LOREM = "<h1>Page 1: Participant Characteristics</h1><p>Please answer the following general questions, then complete the volume calibration before continuing.</p>";
 
 const AGE_OPTIONS = [
   ["18-24", "18-24 years old"], ["25-34", "25-34 years old"],
@@ -57,7 +57,7 @@ export default {
 
     [fields.age, fields.gender].forEach((r) => r.onChange(recheck));
 
-    const calibWrap = questionBlock(container, "Volume calibration — please listen all the way through to enable Continue.");
+    const calibWrap = questionBlock(container, "This audio sample is a short conversation excerpt. To proceed, please play the snippet and set your volume to a comfortable level such that both speakers are clearly audible.");
     calibrationPlayer = createCalibrationPlayer(calibWrap, state.staticAudio.volume_calibration, {
       onListenedEnough: recheck,
     });

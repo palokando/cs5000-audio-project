@@ -3,7 +3,7 @@
 import { finalizeStudy2 } from "../../supabase.js";
 import { questionBlock } from "../../form-helpers.js";
 
-const LOREM = "Lorem ipsum. Thank you for completing the study. Optionally provide feedback below, then submit to receive your completion code.";
+const LOREM = "<p>Thank you for completing the study! Before closing the webpage, copy the code below to finalize your submission on Prolific.</p>";
 const COMPLETION_CODE = "SAMPLE-CODE-FINAL";
 
 export default {
