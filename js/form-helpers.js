@@ -36,7 +36,9 @@ export function radioGroup(parent, label, options) {
     input.name = name;
     input.id = id;
     input.value = String(value);
-    lbl.append(input, document.createTextNode(" " + display));
+    const txt = document.createElement("span");
+    txt.innerHTML = display;
+    lbl.append(input, txt);
     wrap.append(lbl);
     inputs.push(input);
   }
@@ -176,7 +178,9 @@ export function checkbox(parent, label) {
   const lbl = document.createElement("label");
   const inp = document.createElement("input");
   inp.type = "checkbox";
-  lbl.append(inp, document.createTextNode(" " + label));
+  const txt = document.createElement("span");
+  txt.innerHTML = label;
+  lbl.append(inp, txt);
   wrap.append(lbl);
   parent.append(wrap);
   const subs = [];
@@ -266,4 +270,11 @@ export function likertMatrix(parent, { promptHTML, scaleLabelsHTML, n = 5, quest
   table.append(tbody);
   parent.append(table);
   return result;
+}
+
+export function divider(parent) {
+  const hr = document.createElement("hr");
+  hr.className = "form-divider";
+  parent.append(hr);
+  return hr;
 }

@@ -2,9 +2,7 @@
 
 import { createCalibrationPlayer } from "../../audio-player.js";
 import { submitStudy2Page2 } from "../../supabase.js";
-import {
-  radioGroup, likert, textInput, numberInput, checkbox, questionBlock,
-} from "../../form-helpers.js";
+import { radioGroup, likert, textInput, numberInput, checkbox, questionBlock, divider } from "../../form-helpers.js";
 
 const LOREM = "<h1>Page 1: Participant Characteristics and Contextualization</h1><p>Please answer the following general questions, then complete the volume calibration before continuing.</p>";
 
@@ -36,7 +34,7 @@ function validate() {
     fields.age, fields.gender, fields.frequency,
     fields.topicFamiliarity, fields.priorStance,
     fields.attitudeImportance, fields.attitudeElaboration, fields.attitudeMoralization,
-    ...fields.nfc, ...fields.ihs,
+    ...fields.nfc, fields.attentionCheck, ...fields.ihs,
   ];
   if (allRadios.some((r) => r.getValue() === null)) return { ok: false };
 
@@ -69,6 +67,7 @@ function collect() {
     attitudeElaboration: parseInt(fields.attitudeElaboration.getValue(), 10),
     attitudeMoralization: parseInt(fields.attitudeMoralization.getValue(), 10),
     nfc: fields.nfc.map((r) => parseInt(r.getValue(), 10)),
+    attentionCheck: parseInt(fields.attentionCheck.getValue(), 10),
     ihs: fields.ihs.map((r) => parseInt(r.getValue(), 10)),
   };
 }
@@ -101,6 +100,8 @@ export default {
     fields.hrw   = numberInput(container, "How many hours per week do you spend listening to podcasts?", { suffix: "hours per week" });
     fields.pcm   = numberInput(container, "How many different podcasts do you listen to in a typical month?", { suffix: "podcasts per month" });
 
+    divider(container);
+
     const topicDict = {
       ne: [
         "Nuclear Energy for Power Generation",
@@ -121,6 +122,8 @@ export default {
     fields.attitudeElaboration = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is a result of careful thinking about relevant information."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
     fields.attitudeMoralization = likert(container, 'To what extent do you agree with the following statement? <mark>"Your attitude on this topic is connected to your core moral values."</mark>', 7, ["Strongly disagree","Disagree","Somewhat disagree","Neither agree nor disagree","Somewhat agree","Agree","Strongly agree"]);
 
+    divider(container);
+
     const NFC_LABELS = ["Extremely uncharacteristic<br>of me","Somewhat uncharacteristic<br>of me","Neither","Somewhat characteristic<br>of me","Extremely characteristic<br>of me"];
     fields.nfc = [
       likert(container, "I would prefer complex to simple problems.", 5, NFC_LABELS),
@@ -130,6 +133,10 @@ export default {
       likert(container, "I really enjoy a task that involves coming up with new solutions to problems.", 5, NFC_LABELS),
       likert(container, "I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.", 5, NFC_LABELS)
     ];
+
+    fields.attentionCheck = likert(container, `To verify you are completing the task attentively, please select "Somewhat uncharacteristic of me" for this question.`, 5, NFC_LABELS);
+
+    divider(container);
 
     const IHS_LABELS = ["Strongly disagree","Disagree","Mostly disagree","Slightly disagree","Neither agree nor disagree","Slightly agree","Mostly agree","Agree","Strongly agree"];
     fields.ihs = [
@@ -147,11 +154,13 @@ export default {
       likert(container, "I feel comfortable admitting my intellectual limitations.", 9, IHS_LABELS)
     ];
 
+    divider(container);
+
     // Wire change handlers
     [fields.age, fields.gender, fields.frequency,
      fields.topicFamiliarity, fields.priorStance,
      fields.attitudeImportance, fields.attitudeElaboration, fields.attitudeMoralization,
-     ...fields.nfc, ...fields.ihs].forEach((r) => r.onChange(recheck));
+     ...fields.nfc, fields.attentionCheck, ...fields.ihs].forEach((r) => r.onChange(recheck));
     [fields.years, fields.hrw, fields.pcm].forEach((n) => n.onChange(recheck));
 
     // Volume calibration player

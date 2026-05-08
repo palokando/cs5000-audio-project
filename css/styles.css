@@ -69,6 +69,12 @@ body {
   color: var(--fg-text);
 }
 
+.form-divider {
+  border: none;
+  border-top: 3px solid var(--fg-text);
+  margin: 40px 0;
+}
+
 label {
   display: flex;
   align-items: center;
@@ -230,7 +236,7 @@ button:disabled {
   justify-content: space-between;
   align-items: flex-start;
   gap: 6px;
-  margin: 8px 0 36px;
+  margin: 8px 0 48px;
 }
 
 .likert-scale-option {

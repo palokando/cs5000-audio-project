@@ -19,7 +19,7 @@ function validate() {
   if (players.length !== 3 || players.some((p) => !p?.isListenedEnough())) return { ok: false };
   if (!fields.conceptual.isFilled()) return { ok: false };
   if (!fields.elicited.isFilled()) return { ok: false };
-  if ([fields.recognizability, fields.distraction, fields.abruptness, fields.interruption]
+  if ([fields.recognizability, fields.distraction, fields.abruptness, fields.interruption, fields.attentionCheck]
       .some((r) => r.getValue() === null)) return { ok: false };
   return { ok: true };
 }
@@ -42,8 +42,8 @@ export default {
       }));
     }
 
-    fields.conceptual = textArea(container, "What does the sound remind you of — does it match any real-world object or situation? Please type in what associations you make (1-2 sentences), and feel free to replay the provided audio snippets if you need to hear the sound again.");
-    fields.elicited   = textArea(container, "What was your reaction the first time you heard the sound while listening to the conversation excerpts? Please discuss the experience and your thoughts in the text box below (2-3 sentences).");
+    fields.conceptual = textArea(container, "What does the sound remind you of — does it match any real-world object or situation? Please type in what associations you make, and feel free to replay the provided audio snippets if you need to hear the sound again.");
+    fields.elicited   = textArea(container, "What was your reaction the first time you heard the sound while listening to the conversation excerpts? Please discuss the experience and your thoughts in the text box below (min. 1 sentence).");
 
     const matrix = likertMatrix(container, {
       promptHTML: "Using the respective scale below, please indicate the extent to which:",
@@ -54,16 +54,18 @@ export default {
         { key: "distraction",     label: "You found the sound distracting while listening." },
         { key: "abruptness",      label: "The sound seemed out of place whenever it occurred." },
         { key: "interruption",    label: "The sound interrupted your overall listening experience." },
+        { key: "attentionCheck",  label: `To verify you are completing the task attentively, please select "Slightly" for this question.` },
       ],
     });
     fields.recognizability = matrix.recognizability;
     fields.distraction     = matrix.distraction;
     fields.abruptness      = matrix.abruptness;
     fields.interruption    = matrix.interruption;
+    fields.attentionCheck  = matrix.attentionCheck;
 
     fields.taskFeedback = textArea(container, "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below.", { required: false });
 
-    [fields.recognizability, fields.distraction, fields.abruptness, fields.interruption]
+    [fields.recognizability, fields.distraction, fields.abruptness, fields.interruption, fields.attentionCheck]
       .forEach((r) => r.onChange(recheck));
     [fields.conceptual, fields.elicited].forEach((t) => t.onChange(recheck));
   },
@@ -78,6 +80,7 @@ export default {
       distraction:     parseInt(fields.distraction.getValue(), 10),
       abruptness:      parseInt(fields.abruptness.getValue(), 10),
       interruption:    parseInt(fields.interruption.getValue(), 10),
+      attentionCheck:  parseInt(fields.attentionCheck.getValue(), 10),
       taskFeedback: fields.taskFeedback.isFilled() ? fields.taskFeedback.getValue() : null,
     });
   },

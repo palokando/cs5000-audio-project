@@ -56,6 +56,7 @@ CREATE TABLE study1_responses (
     distraction              smallint CHECK (distraction     BETWEEN 1 AND 5),
     abruptness               smallint CHECK (abruptness      BETWEEN 1 AND 5),
     interruption             smallint CHECK (interruption    BETWEEN 1 AND 5),
+    attention_check          smallint CHECK (attention_check BETWEEN 1 AND 5),
     task_feedback            text,
     created_at               timestamptz NOT NULL DEFAULT now(),
     updated_at               timestamptz NOT NULL DEFAULT now(),
@@ -122,6 +123,7 @@ CREATE TABLE study2_responses (
     ihs_q10 smallint CHECK (ihs_q10 BETWEEN 1 AND 9),
     ihs_q11 smallint CHECK (ihs_q11 BETWEEN 1 AND 9),
     ihs_q12 smallint CHECK (ihs_q12 BETWEEN 1 AND 9),
+    attention_check_profiling smallint CHECK (attention_check_profiling BETWEEN 1 AND 5),
 
     -- Page 3: Podcast Listening (audio tracking, written by the heartbeat)
     latest_time_reached      integer CHECK (latest_time_reached     >= 0),
@@ -167,6 +169,7 @@ CREATE TABLE study2_responses (
     distraction              smallint CHECK (distraction     BETWEEN 1 AND 5),
     abruptness               smallint CHECK (abruptness      BETWEEN 1 AND 5),
     interruption             smallint CHECK (interruption    BETWEEN 1 AND 5),
+    attention_check_eval     smallint CHECK (attention_check_eval BETWEEN 1 AND 5),
 
     -- Page 7: Debrief
     informed_consent             boolean,
@@ -422,6 +425,7 @@ CREATE OR REPLACE FUNCTION submit_study1_page3(
     p_distraction         smallint,
     p_abruptness          smallint,
     p_interruption        smallint,
+    p_attention_check     smallint,
     p_task_feedback       text
 ) RETURNS void
 LANGUAGE plpgsql SECURITY DEFINER
@@ -435,6 +439,7 @@ BEGIN
            distraction        = p_distraction,
            abruptness         = p_abruptness,
            interruption       = p_interruption,
+           attention_check    = p_attention_check,
            task_feedback      = p_task_feedback
      WHERE participant_prolific_id = p_prolific_id
        AND completed_at IS NULL;
@@ -443,7 +448,7 @@ BEGIN
     END IF;
 END;
 $$;
-GRANT EXECUTE ON FUNCTION submit_study1_page3(text, text, text, smallint, smallint, smallint, smallint, text) TO anon;
+GRANT EXECUTE ON FUNCTION submit_study1_page3(text, text, text, smallint, smallint, smallint, smallint, smallint, text) TO anon;
 
 
 -- Study 1 finalize (Page 4) ---------------------------------------------------
@@ -486,7 +491,8 @@ CREATE OR REPLACE FUNCTION submit_study2_page2(
     p_ihs_q1  smallint, p_ihs_q2  smallint, p_ihs_q3  smallint,
     p_ihs_q4  smallint, p_ihs_q5  smallint, p_ihs_q6  smallint,
     p_ihs_q7  smallint, p_ihs_q8  smallint, p_ihs_q9  smallint,
-    p_ihs_q10 smallint, p_ihs_q11 smallint, p_ihs_q12 smallint
+    p_ihs_q10 smallint, p_ihs_q11 smallint, p_ihs_q12 smallint,
+    p_attention_check smallint
 ) RETURNS void
 LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = public, pg_temp
@@ -510,7 +516,8 @@ BEGIN
            ihs_q1 = p_ihs_q1, ihs_q2 = p_ihs_q2, ihs_q3 = p_ihs_q3,
            ihs_q4 = p_ihs_q4, ihs_q5 = p_ihs_q5, ihs_q6 = p_ihs_q6,
            ihs_q7 = p_ihs_q7, ihs_q8 = p_ihs_q8, ihs_q9 = p_ihs_q9,
-           ihs_q10 = p_ihs_q10, ihs_q11 = p_ihs_q11, ihs_q12 = p_ihs_q12
+           ihs_q10 = p_ihs_q10, ihs_q11 = p_ihs_q11, ihs_q12 = p_ihs_q12,
+           attention_check_profiling = p_attention_check
      WHERE participant_prolific_id = p_prolific_id
        AND completed_at IS NULL
        AND exited_prematurely_at IS NULL;
@@ -525,7 +532,8 @@ GRANT EXECUTE ON FUNCTION submit_study2_page2(
     smallint, smallint, smallint, smallint, smallint,
     smallint, smallint, smallint, smallint, smallint, smallint,
     smallint, smallint, smallint, smallint, smallint, smallint,
-    smallint, smallint, smallint, smallint, smallint, smallint
+    smallint, smallint, smallint, smallint, smallint, smallint,
+    smallint
 ) TO anon;
 
 
@@ -642,7 +650,8 @@ CREATE OR REPLACE FUNCTION submit_study2_page6(
     p_recognizability      smallint,
     p_distraction          smallint,
     p_abruptness           smallint,
-    p_interruption         smallint
+    p_interruption         smallint,
+    p_attention_check      smallint
 ) RETURNS void
 LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = public, pg_temp
@@ -656,7 +665,8 @@ BEGIN
            recognizability     = p_recognizability,
            distraction         = p_distraction,
            abruptness          = p_abruptness,
-           interruption        = p_interruption
+           interruption        = p_interruption,
+           attention_check_eval = p_attention_check
      WHERE participant_prolific_id = p_prolific_id
        AND completed_at IS NULL
        AND exited_prematurely_at IS NULL;
@@ -666,7 +676,7 @@ BEGIN
 END;
 $$;
 GRANT EXECUTE ON FUNCTION submit_study2_page6(
-    text, text, text, smallint, text, smallint, smallint, smallint, smallint
+    text, text, text, smallint, text, smallint, smallint, smallint, smallint, smallint
 ) TO anon;
 
 

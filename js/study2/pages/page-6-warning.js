@@ -24,7 +24,7 @@ function validate() {
   if (!fields.elicited.isFilled()) return { ok: false };
   if (fields.acclimateTrend.getValue() === null) return { ok: false };
   if (!fields.acclimateRationale.isFilled()) return { ok: false };
-  if ([fields.recognizability, fields.distraction, fields.abruptness, fields.interruption]
+  if ([fields.recognizability, fields.distraction, fields.abruptness, fields.interruption, fields.attentionCheck]
       .some((r) => r.getValue() === null)) return { ok: false };
   return { ok: true };
 }
@@ -46,15 +46,15 @@ export default {
 
     for (let i = 1; i <= 3; i++) {
       const url = state.staticAudio[`${state.podcastName}_${i}`];
-      const wrap = questionBlock(container, `Podcast Snippet ${i} (Sound Reminder)`);
+      const wrap = questionBlock(container, `Podcast Snippet ${i}`);
       players.push(createFreeFormPlayer(wrap, url));
     }
 
-    fields.conceptual = textArea(container, "What does the sound remind you of — does it match any real-world object or situation? Please type in what associations you make (1-2 sentences), and feel free to replay the provided audio snippets if you need to hear the sound again.");
-    fields.elicited   = textArea(container, "What was your reaction the first time you heard the sound while listening to the podcast? Please discuss the experience and your thoughts in the text box below (2-3 sentences).");
+    fields.conceptual = textArea(container, "What does the sound remind you of — does it match any real-world object or situation? Please type in what associations you make, and feel free to replay the provided audio snippets if you need to hear the sound again.");
+    fields.elicited   = textArea(container, "What was your reaction the first time you heard the sound while listening to the podcast? Please discuss the experience and your thoughts in the text box below (min. 1 sentence).");
 
     fields.acclimateTrend     = radioGroup(container, "Did your initial perceptions of the sound change as it re-occurred throughout the podcast? Please select an option...", ACCLIMATE_OPTS);
-    fields.acclimateRationale = textArea(container, "...and elaborate in the text box below (1-2 sentences).");
+    fields.acclimateRationale = textArea(container, "...and elaborate in the text box below (min. 1 sentence).");
 
     const matrix = likertMatrix(container, {
       promptHTML: "Using the respective scale below, please indicate the extent to which:",
@@ -65,14 +65,16 @@ export default {
         { key: "distraction",     label: "You found the sound distracting while listening." },
         { key: "abruptness",      label: "The sound seemed out of place whenever it occurred." },
         { key: "interruption",    label: "The sound interrupted your overall listening experience." },
+        { key: "attentionCheck",  label: `To verify you are completing the task attentively, please select "Slightly" for this question.` },
       ],
     });
     fields.recognizability = matrix.recognizability;
     fields.distraction     = matrix.distraction;
     fields.abruptness      = matrix.abruptness;
     fields.interruption    = matrix.interruption;
+    fields.attentionCheck  = matrix.attentionCheck;
 
-    [fields.acclimateTrend, fields.recognizability, fields.distraction, fields.abruptness, fields.interruption]
+    [fields.acclimateTrend, fields.recognizability, fields.distraction, fields.abruptness, fields.interruption, fields.attentionCheck]
       .forEach((r) => r.onChange(recheck));
     [fields.conceptual, fields.elicited, fields.acclimateRationale]
       .forEach((t) => t.onChange(recheck));
@@ -90,6 +92,7 @@ export default {
       distraction:     parseInt(fields.distraction.getValue(), 10),
       abruptness:      parseInt(fields.abruptness.getValue(), 10),
       interruption:    parseInt(fields.interruption.getValue(), 10),
+      attentionCheck:  parseInt(fields.attentionCheck.getValue(), 10),
     });
   },
 

@@ -3,7 +3,6 @@
 import { questionBlock } from "../../form-helpers.js";
 
 const LOREM = "<p>You have exited the study. Before closing the webpage, copy the code below to finalize your submission on Prolific.</p>";
-const PREMATURE_CODE = "SAMPLE-CODE-PREMATURE";
 
 export default {
   id: "exit",
@@ -12,11 +11,11 @@ export default {
   instructions: LOREM,
 
   mount(container) {
-    const wrap = questionBlock(container, "Completion code");
+    const wrap = questionBlock(container, "Completion Code");
     const codeBox = document.createElement("div");
     codeBox.className = "completion-code";
     codeBox.style.fontWeight = "bold";
-    codeBox.textContent = PREMATURE_CODE;
+    codeBox.textContent = "SAMPLE-CODE-PREMATURE";
     wrap.append(codeBox);
   },
 

@@ -63,6 +63,7 @@ export function submitStudy1Page3(prolificId, v) {
     p_distraction:        v.distraction,
     p_abruptness:         v.abruptness,
     p_interruption:       v.interruption,
+    p_attention_check:    v.attentionCheck,
     p_task_feedback:      v.taskFeedback,
   });
 }
@@ -96,6 +97,7 @@ export function submitStudy2Page2(prolificId, v) {
     p_ihs_q4: v.ihs[3],  p_ihs_q5: v.ihs[4],  p_ihs_q6: v.ihs[5],
     p_ihs_q7: v.ihs[6],  p_ihs_q8: v.ihs[7],  p_ihs_q9: v.ihs[8],
     p_ihs_q10: v.ihs[9], p_ihs_q11: v.ihs[10], p_ihs_q12: v.ihs[11],
+    p_attention_check: v.attentionCheck,
   });
 }
 
@@ -144,6 +146,7 @@ export function submitStudy2Page6(prolificId, v) {
     p_distraction: v.distraction,
     p_abruptness: v.abruptness,
     p_interruption: v.interruption,
+    p_attention_check: v.attentionCheck,
   });
 }
 

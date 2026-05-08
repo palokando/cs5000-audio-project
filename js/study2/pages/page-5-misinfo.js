@@ -36,7 +36,7 @@ export default {
       players[orderList[i]] = createMandatorySnippetPlayer(wrap, state.staticAudio[`${state.podcastTopic}_recognize_${orderList[i]}`], { onListenedEnough: recheck });
 
       judgments[orderList[i]] = radioGroup(container, "Is the information conveyed in the snippet factually accurate?", YES_NO);
-      rationales[orderList[i]] = textArea(container, "What makes you think so? (1-2 sentences)");
+      rationales[orderList[i]] = textArea(container, "What makes you think so? (min. 1 sentence)");
     }
 
     Object.values(judgments).forEach((r) => r.onChange(recheck));
