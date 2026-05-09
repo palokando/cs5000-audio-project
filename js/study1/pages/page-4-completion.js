@@ -17,7 +17,7 @@ export default {
     const codeBox = document.createElement("div");
     codeBox.className = "completion-code";
     codeBox.style.fontWeight = "bold";
-    codeBox.textContent = "SAMPLE-CODE-FINAL";
+    codeBox.textContent = "C1NLQCNF";
     wrap.append(codeBox);
 
     finalizeStudy1(state.prolificId).catch(() => {});

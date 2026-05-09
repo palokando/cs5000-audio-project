@@ -15,7 +15,7 @@ export default {
     const codeBox = document.createElement("div");
     codeBox.className = "completion-code";
     codeBox.style.fontWeight = "bold";
-    codeBox.textContent = "SAMPLE-CODE-PREMATURE";
+    codeBox.textContent = "CYAHU9OX";
     wrap.append(codeBox);
   },
 
