@@ -35,7 +35,7 @@ export default {
       const wrap = questionBlock(container, `Podcast Snippet ${i + 1}`);
       players[orderList[i]] = createMandatorySnippetPlayer(wrap, state.staticAudio[`${state.podcastTopic}_recognize_${orderList[i]}`], { onListenedEnough: recheck });
 
-      judgments[orderList[i]] = radioGroup(container, "Is the information conveyed in the snippet factually accurate?", YES_NO);
+      judgments[orderList[i]] = radioGroup(container, "Is the entire discussion from the snippet factually accurate?", YES_NO);
       rationales[orderList[i]] = textArea(container, "What makes you think so? (min. 1 sentence)");
     }
 

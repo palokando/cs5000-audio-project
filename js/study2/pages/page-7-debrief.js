@@ -39,7 +39,7 @@ export default {
       fields.downstream.element.hidden = true;
     }
 
-    fields.feedback = textArea(container, "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below.", { required: false });
+    fields.feedback = textArea(container, state.condition === "without" ? "<mark>You were part of the control group and therefore did not encounter auditory warnings while listening.</mark><br><br>Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below." : "Based on your experience completing this task, please (optionally) provide any feedback or suggestions for improvement you consider relevant in the text box below.", { required: false });
 
     fields.readInfo.onChange(recheck);
     fields.immediate.onChange(recheck);
